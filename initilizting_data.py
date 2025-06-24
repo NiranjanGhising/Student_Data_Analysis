@@ -1,6 +1,7 @@
 import numpy as np
 
 
+
 def initilize_data():
     subject = np.array(['English','Nepali','Math','Science', 'Social'])
     students = np.array(['Niranjan','Mukesh','tarkari','bujiya','Naruto'])
