@@ -1,21 +1,23 @@
 import numpy as np
 
-
-def user_input(studentArray,subjectArray,marksArray):
-
-
+def user_input(studentArray, subjectArray, marksArray):
     studentName = input('Student name: ')
+    marks = np.empty(len(subjectArray), dtype=int)
 
-    #empty array for adding marks as same length as subject
-    marks = np.empty(len(subjectArray), dtype =int)
-
-    # Getting input marks from users, as same as subject length
     for i in range(len(subjectArray)):
-        marks[i] = int(input(f'Enter marks for {subjectArray[i]}: '))
+        while True:
+            try:
+                value = int(input(f'Enter marks for {subjectArray[i]}: '))
+                if 0 <= value <= 100:
+                    marks[i] = value
+                    break
+                else:
+                    print("Marks must be between 0 and 100.")
+            except ValueError:
+                print("Please enter a valid integer for marks.")
 
-    #adding new studnets to studentArray
-    studentArray = np.append(studentArray,studentName)
-    #adding marks to marksArray
-    marksArray = np.vstack((marksArray,marks))
+    # Add new student and corresponding marks
+    studentArray = np.append(studentArray, studentName)
+    marksArray = np.vstack((marksArray, marks))
 
     return studentArray, marksArray

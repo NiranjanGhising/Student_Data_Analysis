@@ -1,78 +1,54 @@
 import numpy as np
 
-
-
 def insight_datas(studentsArray, subjectArray, marksArray):
+    # Average marks for each subject
+    avgSubject = np.mean(marksArray, axis=0)
 
-    #average marks for each subject
-    avgSubject = np.mean(marksArray,axis = 0)
+    # Deviation and variation of marks
+    stdSubject = np.std(marksArray, axis=0)
+    varSubject = np.var(marksArray, axis=0)
+    stdStudents = np.std(marksArray, axis=1)
+    varStudents = np.var(marksArray, axis=1)
 
-    #deviation and variation of marks
-    stdSubject = np.std(marksArray, axis = 0)
-    varSubject = np.var(marksArray, axis = 0)
-    stdSubjects = np.std(marksArray, axis = 1)
-    varSubjects = np.var(marksArray, axis = 1)
+    # First and last performing student
+    FirstPerformer = studentsArray[np.argmax(np.sum(marksArray, axis=1))]
+    LastPerformer = studentsArray[np.argmin(np.sum(marksArray, axis=1))]
 
-
-    #First and last Performing Student
-
-    FirstPerformer = studentsArray[np.argmax(np.sum(marksArray, axis = 1))]
-    LastPerformer = studentsArray[np.argmin(np.sum(marksArray, axis = 1))]
-
-    #subject comparision
+    # Subject comparison
     easiestSubject = subjectArray[np.argmax(avgSubject)]
     hardestSubject = subjectArray[np.argmin(avgSubject)]
 
-    #over all performance 
+    # Overall performance
     totalAverage = np.mean(marksArray)
     totalStd = np.std(marksArray)
     totalVar = np.var(marksArray)
-    #analysis and Visualization Part
-    # total number of students
-    
-    print('Total Number of students: ', len(studentsArray))
 
-    #average Marks for each subject
+    print('Total Number of students:', len(studentsArray))
 
     print("-----Average Marks-----")
-    for i , subject in enumerate(subjectArray):
-        print('\t', subject,':',avgSubject[i])
+    for i, subject in enumerate(subjectArray):
+        print('\t', subject, ':', avgSubject[i])
 
-    #deviation and variation of marks 
-
-    print("------------Standard Deviation and Variance per Subject --------------")
-    header = np.array(['Subject Name ', 'Standard Deviation', 'Variance'])
+    print("------------Standard Deviation and Variance per Subject--------------")
+    header = np.array(['Subject Name', 'Standard Deviation', 'Variance'])
     print('|'.join(header))
-
-    #separator line
-
-    sep = "+".join(['-'*len(items) for items in header])
+    sep = '+'.join(['-'*len(items) for items in header])
     print(sep)
 
-    for i , student in enumerate(subjectArray):
-
-        row = f"{student:<{len(header[0])}}" + '|' + f"stdSubject[i] : <{len(header[1])}" + '|' f"varStudents[i] :<{len(header[2])}"
+    for i, subject in enumerate(subjectArray):
+        row = f"{subject:<{len(header[0])}}|{stdSubject[i]:<{len(header[1])}.2f}|{varSubject[i]:<{len(header[2])}.2f}"
         print(row)
 
-    #Standard deviation and Variance
-    print('\n Standard Deviation and Variance per Student')
+    print('\nStandard Deviation and Variance per Student')
     print('|'.join(header))
     print(sep)
-
     for i, student in enumerate(studentsArray):
-        row = f"{student :<{len(header[0])}}" +'|'+ f"{stdSubject[i] :<{len(header[1])}}" + '|' + f"{varSubject[i] :<{len(header[2])}}"
+        row = f"{student:<{len(header[0])}}|{stdStudents[i]:<{len(header[1])}.2f}|{varStudents[i]:<{len(header[2])}.2f}"
         print(row)
 
-    #first and last performing students
-    print('\n First Student:',FirstPerformer)
-    print('\n last Student:',LastPerformer)
-
-    #subject Comparison
-    print('\n Easiest Subject', easiestSubject, '\n Hardest Subject : ',hardestSubject)
-
-    #overall Performance 
-    print('\n Metrics across all Students and Subjects')
-    print(f"Average Marks: {totalAverage}. \n Standard Deviation : {totalStd}. \n Variance : {totalVar}")
-
-
-    
+    print('\nFirst Student:', FirstPerformer)
+    print('Last Student:', LastPerformer)
+    print('\nEasiest Subject:', easiestSubject)
+    print('Hardest Subject:', hardestSubject)
+    print('\nMetrics across all Students and Subjects')
+    print(f"Average Marks: {totalAverage:.2f}\nStandard Deviation: {totalStd:.2f}\nVariance: {totalVar:.2f}")
